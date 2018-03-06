@@ -1,6 +1,6 @@
 require 'csv'
 
-filename = 'tox.csv'
+filename = ARGV[0]
 counter = 0
 
 headers = []
@@ -9,9 +9,9 @@ combined = []
 
 def get_type(string)
   return "bool" if string == "FALSE" or string == "TRUE"
-  return "null" if string == "NA" or string == "null"
+  return "null" if string == "NA" or string == "null" or string == "\\N"
   return "integer" if string =~ /\A[-+]?\d+\z/
-  return "float" if string =~ /[+-]?([0-9]*[.])?[0-9]+/
+  return "float" if string =~ /^[-+]?[0-9]*\.?[0-9]*$/
   return "string"
 end
 
@@ -42,6 +42,6 @@ end
 combined_string = combined.join(",")
 
 
-File.open("#{filename.split('.')[0]}.txt", 'w') do |file|
+File.open("#{File.basename(filename, ".csv")}.txt", 'w') do |file|
   file.write(combined_string)
 end
