@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config');
+const experiment = require('./routes/expirement');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -30,6 +31,8 @@ app.get('/', (req, res) => {
     'uptime': `${process.uptime()}`,
   });
 });
+
+app.use('/experiment', experiment);
 
 // error handler
 // no stacktraces leaked to user unless in development environment

@@ -33,7 +33,7 @@ class Response {
 
     // Payload will be the data given by user
     // (if is object it will be unpacked)
-    if (typeof (payload) === 'object') {
+    if (typeof (payload) === 'object' && !Array.isArray(payload)) {
       this.payload = (payload) ? Object.assign({}, payload) : null;
     } else {
       this.payload = payload ? payload : null;
