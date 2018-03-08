@@ -22,8 +22,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
+
+// Set the header to allow cross site so that this server may act as an API
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 // Testing route to ensure server is up
 app.get('/', (req, res) => {
