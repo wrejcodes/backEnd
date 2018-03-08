@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config');
 const experiment = require('./routes/expirement');
+const target = require('./routes/target');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/experiment', experiment);
+app.use('/target', target);
 
 // error handler
 // no stacktraces leaked to user unless in development environment
