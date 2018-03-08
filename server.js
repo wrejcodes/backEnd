@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const config = require('./config');
 const experiment = require('./routes/expirement');
 const target = require('./routes/target');
+const citation = require('./routes/citation');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -40,6 +41,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/experiment', experiment);
+app.use('/citation', citation);
 app.use('/target', target);
 
 // error handler
