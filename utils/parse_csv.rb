@@ -42,6 +42,6 @@ end
 combined_string = combined.join(",")
 
 
-File.open("#{File.basename(filename, ".csv")}.txt", 'w') do |file|
+File.open("#{File.dirname(filename)}/#{File.basename(filename, ".csv")}.txt", 'w') do |file|
   file.write(combined_string)
 end
