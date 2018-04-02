@@ -8,7 +8,8 @@
     "test": "npm run test-unit && npm run test-integration",
     "test-unit": "cross-env NODE_ENV=test ./node_modules/.bin/mocha test/unit/*.test.js",
     "test-integration": "cross-env NODE_ENV=test ./node_modules/.bin/mocha test/integration/*.test.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "parse": "ruby utils/parse_csv.rb"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/Gods-Of-ACM/backEnd#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
@@ -30,6 +32,8 @@
     "morgan": "^1.9.0",
     "mysql2": "^1.5.2",
     "nodemon": "^1.15.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.1",
     "pug": "^2.0.0-rc.4",
     "sequelize": "^4.33.4",
     "sequelize-cli": "^4.0.0",
