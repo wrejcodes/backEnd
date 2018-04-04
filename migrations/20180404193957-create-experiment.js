@@ -75,7 +75,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       dilution_solvent_percent_max: {
-        type: Sequelize.FLOAT
+        type: Sequelize.DOUBLE
       },
       assay_component_name: {
         type: Sequelize.STRING

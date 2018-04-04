@@ -15,9 +15,9 @@ combined = []
 
 def get_type(string)
   return "bool" if string == "FALSE" or string == "TRUE"
-  return "null" if string == "NA" or string == "null" or string == "\\N"
+  return "null" if string == "NA" or string == "null" or string == "\\N" or string == nil
   return "integer" if string =~ /\A[-+]?\d+\z/
-  return "float" if string =~ /^[-+]?[0-9]*\.?[0-9]*$/
+  return "double" if string =~ /^[-+]?[0-9]*\.?[0-9]*$/
   return "text" if string.size > 255
   return "string"
 end
@@ -61,6 +61,9 @@ if output_type != "TESTDATA" && output_type != 'SEEDDATA'
 end
 
 fields.each_with_index do |field, index|
+  if output_type == 'SQL'
+    next if index == 0 && headers[index] == 'id'
+  end
   if output_type == 'JSON'
     field = 'number' if field == 'integer' || field == 'float'
     field = 'text' if field == 'string'
@@ -71,9 +74,11 @@ fields.each_with_index do |field, index|
     if type == 'bool'
       field = field[0] == 'T' ? 'true': 'false'
     end
+    field = 'null' if field == nil
+    field = field.gsub("\r", "\\n") if type == "string" || type == "text"
   end
   label = headers[index % headers.size].split('_').each(&:capitalize!).join(' ')
-  format_strings =["{ type: '#{field}', label: '#{label}' name:'#{headers[index]}' },", "#{headers[index]}:#{field}", "+ #{headers[index]}:#{field}", "#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' or type == 'text' ? "\"" : ""}#{field}#{type && type == 'string' or type == 'text' ? "\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}","#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' || type == 'text' ? "\"" : ""}#{field}#{type && type == 'string' || type == 'text' ? "'\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}"]
+  format_strings =["{ type: '#{field}', label: '#{label}' name:'#{headers[index]}' },", "#{headers[index]}:#{field}", "+ #{headers[index]}:#{field}", "#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && (type == 'string' || type == 'text') ? "\"" : ""}#{field}#{type && (type == 'string' || type == 'text') ? "\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}","#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' || type == 'text' ? "\"" : ""}#{field}#{type && type == 'string' || type == 'text' ? "'\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}"]
   combined.push format_strings[current_type]
 end
 

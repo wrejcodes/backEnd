@@ -18,7 +18,9 @@
     "init:db:test": "npm run init:database:test && npm run init:tables:test",
     "init:database:test": "./node_modules/sequelize-cli/lib/sequelize db:create --env test",
     "init:tables:test": "./node_modules/sequelize-cli/lib/sequelize db:migrate --env test",
-    "parse": "ruby utils/parse_csv.rb"
+    "parse": "ruby utils/parse_csv.rb",
+    "generate:models": "ruby utils/make_models.rb",
+    "recreate:dev_test": "ruby utils/recreate_db.rb"
   },
   "repository": {
     "type": "git",

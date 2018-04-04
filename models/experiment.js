@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     assay_format_type_sub: DataTypes.STRING,
     content_readout_type: DataTypes.STRING,
     dilution_solvent: DataTypes.STRING,
-    dilution_solvent_percent_max: DataTypes.FLOAT,
+    dilution_solvent_percent_max: DataTypes.DOUBLE,
     assay_component_name: DataTypes.STRING,
     assay_component_desc: DataTypes.TEXT,
     assay_component_target_desc: DataTypes.TEXT,
