@@ -27,13 +27,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       assay_source_desc: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
       assay_name: {
         type: Sequelize.STRING
       },
       assay_desc: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
       timepoint_hr: {
         type: Sequelize.INTEGER

@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     other_id: DataTypes.INTEGER,
     citation: DataTypes.TEXT,
     title: DataTypes.STRING,
-    author: DataTypes.STRING,
+    author: DataTypes.TEXT,
     url: DataTypes.STRING
   }, {});
   citation.associate = function(models) {

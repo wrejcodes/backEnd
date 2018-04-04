@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       author: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       url: {
         type: Sequelize.STRING

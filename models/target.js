@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     technological_target_organism_id: DataTypes.INTEGER,
     technological_target_track_status: DataTypes.STRING
   }, {});
-  target.associate = function(models){
+  target.associate = function(models) {
     // associations can be defined here
   };
   return target;

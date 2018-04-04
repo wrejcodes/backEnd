@@ -18,7 +18,12 @@ def get_type(string)
   return "null" if string == "NA" or string == "null" or string == "\\N"
   return "integer" if string =~ /\A[-+]?\d+\z/
   return "float" if string =~ /^[-+]?[0-9]*\.?[0-9]*$/
+  return "text" if string.size > 255
   return "string"
+end
+
+def low_precedence(type)
+  return type == "null" || type == "string" || type == "integer" 
 end
 
 CSV.foreach(filename) do |row|
@@ -39,8 +44,9 @@ CSV.foreach(filename) do |row|
       type = get_type(item)
       fields.push type if counter == 1
       if counter > 1
-        type = get_type(item) if fields[row_index] == "null"
-        fields[row_index] = type if type != "null"
+        if low_precedence fields[row_index]
+          fields[row_index] = type if type != "null"
+        end
       end
       row_index += 1
     end
@@ -67,7 +73,7 @@ fields.each_with_index do |field, index|
     end
   end
   label = headers[index % headers.size].split('_').each(&:capitalize!).join(' ')
-  format_strings =["{ type: '#{field}', label: '#{label}' name:'#{headers[index]}' },", "#{headers[index]}:#{field}", "+ #{headers[index]}:#{field}", "#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' ? "\"" : ""}#{field}#{type && type == 'string' ? "\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}","#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' ? "\"" : ""}#{field}#{type && type == 'string' ? "'\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}"]
+  format_strings =["{ type: '#{field}', label: '#{label}' name:'#{headers[index]}' },", "#{headers[index]}:#{field}", "+ #{headers[index]}:#{field}", "#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' or type == 'text' ? "\"" : ""}#{field}#{type && type == 'string' or type == 'text' ? "\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}","#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' || type == 'text' ? "\"" : ""}#{field}#{type && type == 'string' || type == 'text' ? "'\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}"]
   combined.push format_strings[current_type]
 end
 
