@@ -1,5 +1,5 @@
 csv_folder = ARGV[0]
-
+puts csv_folder
 if csv_folder == nil
   puts 'Please give path to csv folder'
   exit 

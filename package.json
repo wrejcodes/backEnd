@@ -20,7 +20,10 @@
     "init:tables:test": "./node_modules/sequelize-cli/lib/sequelize db:migrate --env test",
     "parse": "ruby utils/parse_csv.rb",
     "generate:models": "ruby utils/make_models.rb",
-    "recreate:dev_test": "ruby utils/recreate_db.rb"
+    "recreate:dev_test": "ruby utils/recreate_db.rb",
+    "generate:unit_test": "ruby utils/generate.rb unit_test",
+    "generate:route": "ruby utils/generate.rb route",
+    "make_app": "ruby utils/make_app.rb"
   },
   "repository": {
     "type": "git",

@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const config = require('./config');
 const passport = require('passport');
 require('./passport')(passport);
-const experiment = require('./routes/expirement');
+const experiment = require('./routes/experiment');
 const target = require('./routes/target');
 const user = require('./routes/user');
 const citation = require('./routes/citation');
