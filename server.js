@@ -13,6 +13,7 @@ const target = require('./routes/target');
 const user = require('./routes/user');
 const citation = require('./routes/citation');
 const chemical = require('./routes/chemical');
+const search = require('./routes/search');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -52,6 +53,7 @@ app.use('/citation', citation);
 app.use('/target', target);
 app.use('/user', user);
 app.use('/chemical', chemical);
+app.use('/search', search);
 
 // error handler
 // no stacktraces leaked to user unless in development environment
