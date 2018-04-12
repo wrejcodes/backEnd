@@ -78,7 +78,7 @@ fields.each_with_index do |field, index|
     field = field.gsub("\r", "\\n") if type == "string" || type == "text"
   end
   label = headers[index % headers.size].split('_').each(&:capitalize!).join(' ')
-  format_strings =["{ type: '#{field}', label: '#{label}' name:'#{headers[index]}' },", "#{headers[index]}:#{field}", "+ #{headers[index]}:#{field}", "#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && (type == 'string' || type == 'text') ? "\"" : ""}#{field}#{type && (type == 'string' || type == 'text') ? "\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}","#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' || type == 'text' ? "\"" : ""}#{field}#{type && type == 'string' || type == 'text' ? "'\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}"]
+  format_strings =["{ type: '#{field}', label: '#{label}' name:'#{headers[index]}' },", "#{headers[index]}:#{field}", "+ #{headers[index]}:#{field}", "#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && (type == 'string' || type == 'text') ? "\"" : ""}#{field}#{type && (type == 'string' || type == 'text') ? "\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}","#{index % headers.size == 0 ? "\t{\n" : ""}\t\t#{headers[index % headers.size]}: #{type && type == 'string' || type == 'text' ? "\"" : ""}#{field}#{type && type == 'string' || type == 'text' ? "\"" : ""}#{index % headers.size == headers.size - 1 ? ",\n\t}" : ""}"]
   combined.push format_strings[current_type]
 end
 
