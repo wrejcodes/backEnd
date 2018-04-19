@@ -75,6 +75,7 @@ fields.each_with_index do |field, index|
       field = field[0] == 'T' ? 'true': 'false'
     end
     field = 'null' if field == nil
+     field = field.gsub("\n", "\\n") if type == "string" || type == "text"
     field = field.gsub("\r", "\\n") if type == "string" || type == "text"
   end
   label = headers[index % headers.size].split('_').each(&:capitalize!).join(' ')
