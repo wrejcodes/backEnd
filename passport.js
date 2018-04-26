@@ -11,7 +11,7 @@ module.exports = (passport) => {
    async function(jwtPayload, done) {
     const instance = await user.findById(jwtPayload.user_id);
     if (!instance) {
-      return done(new Error('coulnt find user with that token'), false);
+      return done(new Error('couldn\'t find user with that token'), false);
     }
     return done(null, instance);
    }

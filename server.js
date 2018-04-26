@@ -9,6 +9,7 @@ const config = require('./config');
 const passport = require('passport');
 require('./passport')(passport);
 const routes = require('./routes');
+const jsonResponse = require('./utils/response');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -41,10 +42,37 @@ app.get('/', (req, res) => {
   });
 });
 
-// when we get ready to authenticate we can use this guy
-// const authenticate = passport.authenticate('jwt', {session: false});
+
+// authentication middleware for routes
+const authenticate = (req, res, next) => {
+  if (req.method !== 'GET') {
+    // everything except GET is protected
+    passport.authenticate('jwt', {session: false, failWithError: true},
+      (err, user, info) => {
+        if (!user) {
+          res.status(401).json(new
+            jsonResponse(`You must be logged in to view this page`));
+        } else {
+          next();
+        }
+      })(req, res, next);
+  } else {
+     next();
+  }
+};
+
+// routes that are unproteced use this
+const noAuth = (req, res, next) => {
+  next();
+};
+
+// whitelist for unprotected routes everything else will be protected
+const unprotectedRoutes = ['auth', 'search'];
+
 Object.keys(routes).forEach((routeName) => {
-  app.use(`/${routeName}`, routes[routeName]);
+  // check which middleware to use
+  const authMid = unprotectedRoutes.includes(routeName) ? noAuth : authenticate;
+  app.use(`/${routeName}`, authMid, routes[routeName]);
 });
 
 // error handler
